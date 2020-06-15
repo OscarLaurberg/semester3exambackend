@@ -8,7 +8,7 @@ package utils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import dtos.CombinedMovieInfoDTO;
-import dtos.MovieInfoDTO;
+import dtos.MovieDTO;
 import dtos.MoviePosterDTO;
 
 /**

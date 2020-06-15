@@ -9,7 +9,7 @@ package dtos;
  *
  * @author oscar
  */
-public class MovieInfoDTO {
+public class MovieDTO {
     
    private String title;
    private int year;
@@ -18,7 +18,7 @@ public class MovieInfoDTO {
    private String genres;
    private String cast;
 
-    public MovieInfoDTO(String title, int year, String plot, String directors, String genres, String cast) {
+    public MovieDTO(String title, int year, String plot, String directors, String genres, String cast) {
         this.title = title;
         this.year = year;
         this.plot = plot;
@@ -27,7 +27,7 @@ public class MovieInfoDTO {
         this.cast = cast;
     }
    
-   public MovieInfoDTO(){
+   public MovieDTO(){
        
    }
 
@@ -82,9 +82,3 @@ public class MovieInfoDTO {
    
     
 }
-/* "title": "Die Hard",
-  "year": 1988,
-  "plot": "John McClane, officer of ….",
-  "directors": "John McTiernan",
-  "genres": "Action,Thriller",
-  "cast": "Bruce Willis,Bonnie Bedelia,Reginald VelJohnson,Paul Gleason",*/

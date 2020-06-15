@@ -23,7 +23,7 @@ public class CombinedMovieInfoDTO {
     private String metacriticRating;
     
     
-    public CombinedMovieInfoDTO(MovieInfoDTO movieInfo, MoviePosterDTO moviePoster){
+    public CombinedMovieInfoDTO(MovieDTO movieInfo, MoviePosterDTO moviePoster){
         this.title=movieInfo.getTitle();
         this.year=movieInfo.getYear();
         this.plot = movieInfo.getPlot();
@@ -33,7 +33,7 @@ public class CombinedMovieInfoDTO {
         this.poster = moviePoster.getPoster();
     }
 
-        public CombinedMovieInfoDTO(MovieInfoDTO movieInfo, MoviePosterDTO moviePoster, String imdbRating){
+        public CombinedMovieInfoDTO(MovieDTO movieInfo, MoviePosterDTO moviePoster, String imdbRating){
         this.title=movieInfo.getTitle();
         this.year=movieInfo.getYear();
         this.plot = movieInfo.getPlot();
@@ -44,7 +44,7 @@ public class CombinedMovieInfoDTO {
         this.imdbRating = imdbRating;
     }
         
-        public CombinedMovieInfoDTO(MovieInfoDTO movieInfo, MoviePosterDTO moviePoster, String imdbRating, String tomatoRating, String metaRating){
+        public CombinedMovieInfoDTO(MovieDTO movieInfo, MoviePosterDTO moviePoster, String imdbRating, String tomatoRating, String metaRating){
         this.title=movieInfo.getTitle();
         this.year=movieInfo.getYear();
         this.plot = movieInfo.getPlot();

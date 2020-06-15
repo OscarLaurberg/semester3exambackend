@@ -12,7 +12,7 @@ import com.google.gson.JsonObject;
 import dtos.CombinedMovieInfoDTO;
 import utils.JsonUtils;
 
-import dtos.MovieInfoDTO;
+import dtos.MovieDTO;
 import dtos.MoviePosterDTO;
 import errorhandling.NotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -66,7 +66,7 @@ public class MovieInfoIMDBResource {
         String imdbRatings = HttpUtils.fetchData(MOVIE_IMDB_RATING_URL + title + "/i");
         JsonObject jsonObject = GSON.fromJson(imdbRatings, JsonObject.class);
         String imdbRating = jsonUtils.getNestedJsonObject(jsonObject, "imdb");
-                MovieInfoDTO movieInfo = GSON.fromJson(movieInfoJson, MovieInfoDTO.class);
+                MovieDTO movieInfo = GSON.fromJson(movieInfoJson, MovieDTO.class);
         MoviePosterDTO posterInfo = GSON.fromJson(moviePosterJson, MoviePosterDTO.class);
         CombinedMovieInfoDTO combinedInfo = new CombinedMovieInfoDTO(movieInfo, posterInfo, imdbRating);
         String combinedJson = GSON.toJson(combinedInfo);

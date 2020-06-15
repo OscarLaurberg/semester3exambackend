@@ -7,7 +7,7 @@ package rest;
 
 import com.google.gson.Gson;
 import dtos.CombinedMovieInfoDTO;
-import dtos.MovieInfoDTO;
+import dtos.MovieDTO;
 import dtos.MoviePosterDTO;
 import errorhandling.NotFoundException;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
@@ -79,7 +79,7 @@ public class MovieInfoResource {
     public String getMovieInfoFromTitle(@PathParam("title") String title) throws IOException, NotFoundException {
         String movieInfoJson = HttpUtils.fetchData(MOVIE_INFO_URL + title);
         String moviePosterJson = HttpUtils.fetchData(MOVIE_POSTER_URL + title);
-        MovieInfoDTO movieInfo = GSON.fromJson(movieInfoJson, MovieInfoDTO.class);
+        MovieDTO movieInfo = GSON.fromJson(movieInfoJson, MovieDTO.class);
         MoviePosterDTO posterInfo = GSON.fromJson(moviePosterJson, MoviePosterDTO.class);
         CombinedMovieInfoDTO combinedInfo = new CombinedMovieInfoDTO(movieInfo, posterInfo);
         String combinedJson = GSON.toJson(combinedInfo);

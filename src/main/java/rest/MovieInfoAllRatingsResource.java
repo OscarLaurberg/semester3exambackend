@@ -9,7 +9,7 @@ import utils.JsonUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import dtos.CombinedMovieInfoDTO;
-import dtos.MovieInfoDTO;
+import dtos.MovieDTO;
 import dtos.MoviePosterDTO;
 import errorhandling.NotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -64,7 +64,7 @@ public class MovieInfoAllRatingsResource {
         String imdbRating = jsonUtils.getNestedJsonObject(jsonObject, "imdb");
         String tomatoRating = jsonUtils.getNestedJsonObject(jsonObject, "tomatoes");
         String metaRating = jsonUtils.getNestedJsonObject(jsonObject,"metacritics");
-        MovieInfoDTO movieInfo = GSON.fromJson(movieInfoJson, MovieInfoDTO.class);
+        MovieDTO movieInfo = GSON.fromJson(movieInfoJson, MovieDTO.class);
         MoviePosterDTO posterInfo = GSON.fromJson(moviePosterJson, MoviePosterDTO.class);
         CombinedMovieInfoDTO combinedInfo = new CombinedMovieInfoDTO(movieInfo, posterInfo, imdbRating, tomatoRating, metaRating);
         String combinedJson = GSON.toJson(combinedInfo);
