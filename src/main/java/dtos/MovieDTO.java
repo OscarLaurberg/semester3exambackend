@@ -19,14 +19,16 @@ public class MovieDTO {
    private String directors;
    private String genres;
    private String cast;
+   private String poster;
 
-    public MovieDTO(String title, int year, String plot, String directors, String genres, String cast) {
+    public MovieDTO(String title, int year, String plot, String directors, String genres, String cast, String poster) {
         this.title = title;
         this.year = year;
         this.plot = plot;
         this.directors = directors;
         this.genres = genres;
         this.cast = cast;
+        this.poster = poster;
     }
     
     public MovieDTO (Movie movie){
@@ -36,11 +38,18 @@ public class MovieDTO {
         this.directors = movie.getDirectors();
         this.genres = movie.getGenres();
         this.cast = movie.getCast_();
+        this.poster = movie.getPoster();
     }
    
    public MovieDTO(){
        
    }
+
+    public String getPoster() {
+        return poster;
+    }
+   
+   
 
     public String getTitle() {
         return title;

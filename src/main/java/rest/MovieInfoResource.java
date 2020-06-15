@@ -93,18 +93,18 @@ public class MovieInfoResource {
         String movieInfoJson = HttpUtils.fetchData(MOVIE_INFO_URL + title);
         String moviePosterJson = HttpUtils.fetchData(MOVIE_POSTER_URL + title);
         MovieDTO movieDTO = GSON.fromJson(movieInfoJson, MovieDTO.class);
-        //MovieDTO movie = FACADE.getMovieByTitle(movieDTO.getTitle());
-        //if(movie == null){
-        //    FACADE.createMovie(movieDTO);
-      //  }
+
         MoviePosterDTO posterInfo = GSON.fromJson(moviePosterJson, MoviePosterDTO.class);
         CombinedMovieInfoDTO combinedInfo = new CombinedMovieInfoDTO(movieDTO, posterInfo);
+        FACADE.checkIfMovieExistsInDbAndCreateRequest(combinedInfo);
         String combinedJson = GSON.toJson(combinedInfo);
         return combinedJson;
       
         
 
     }
+    
+    
 
     /**
      * Creates a new instance of MovieInfoResource

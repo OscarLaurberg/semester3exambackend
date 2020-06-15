@@ -5,6 +5,7 @@
  */
 package entity;
 
+import dtos.CombinedMovieInfoDTO;
 import dtos.MovieDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -50,21 +51,21 @@ public class Movie implements Serializable {
     private String genres;
     @Column (nullable = false)
     private String cast_;
-    @Column
+    @Column (nullable =false)
     private String poster;
     
 
     @OneToMany(mappedBy="owner", cascade = {CascadeType.PERSIST,CascadeType.ALL})
     private List<Request> requests = new ArrayList<>();
     
-       public Movie(String title, int year, String plot, String directors, String genres, String cast) {
+       public Movie(String title, int year, String plot, String directors, String genres, String cast, String poster) {
         this.title = title;
         this.year_ = year;
         this.plot = plot;
         this.directors = directors;
         this.genres = genres;
         this.cast_ = cast;
-
+        this.poster=poster;
     }
 
     public Movie() {
@@ -77,6 +78,17 @@ public class Movie implements Serializable {
         this.directors = movieDTO.getDirectors();
         this.genres = movieDTO.getGenres();
         this.cast_ = movieDTO.getCast();
+        this.poster = movieDTO.getPoster();
+    }
+
+    public Movie(CombinedMovieInfoDTO combinedInfo) {
+        this.title = combinedInfo.getTitle();
+        this.year_ = combinedInfo.getYear();
+        this.plot = combinedInfo.getPlot();
+        this.directors = combinedInfo.getDirectors();
+        this.genres = combinedInfo.getGenres();
+        this.cast_ = combinedInfo.getCast();
+        this.poster = combinedInfo.getPoster();
     }
        
     

@@ -23,10 +23,11 @@ public class RequestDTO {
     public RequestDTO() {
     }
 
-    public RequestDTO(String title) {
+   public RequestDTO(String title) {
         this.title = title;
+ 
     }
-    
+     
     
     
     public RequestDTO(Request request){

@@ -56,6 +56,7 @@ public class Request implements Serializable {
     
     public Request (RequestDTO requestDTO){
         this.title=requestDTO.getTitle();
+        requestDate = new Date();
         
     }
 

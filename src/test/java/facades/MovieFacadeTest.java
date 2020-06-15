@@ -5,7 +5,9 @@
  */
 package facades;
 
+import dtos.CombinedMovieInfoDTO;
 import dtos.MovieDTO;
+import dtos.MoviePosterDTO;
 import entity.Movie;
 import errorhandling.NotFoundException;
 import javax.persistence.EntityManager;
@@ -28,6 +30,7 @@ public class MovieFacadeTest {
 
     private static EntityManagerFactory entityManagerFactory;
     private static MovieFacade movieFacade;
+    private static RequestFacade requestFacade;
     private static Movie m1, m2;
     private static MovieDTO md1, md2;
 
@@ -38,8 +41,9 @@ public class MovieFacadeTest {
     public static void setUpClass() {
         entityManagerFactory = EMF_Creator.createEntityManagerFactory(DbSelector.TEST, Strategy.DROP_AND_CREATE);
         movieFacade = MovieFacade.getMovieFacade(entityManagerFactory);
-        m1 = new Movie("Fast & Furious 2000", 2022, "They are driving around, that's pretty much it","Sly himself","Scifi, horror","Arnold and the gang");
-        m2 = new Movie("Bamses Venner", 1998, "Bamse bager boller og Kylling griller","Torben Due","Børn","Bamse,Kylling,");
+        requestFacade = RequestFacade.getRequestFacade(entityManagerFactory);
+        m1 = new Movie("Fast & Furious 2000", 2022, "They are driving around, that's pretty much it","Sly himself","Scifi, horror","Arnold and the gang","posterland.dk");
+        m2 = new Movie("Bamses Venner", 1998, "Bamse bager boller og Kylling griller","Torben Due","Børn","Bamse,Kylling,","posterland.dk");
 
     }
 
@@ -79,12 +83,12 @@ public class MovieFacadeTest {
        @Test
        public void testGetByTitle_with_existing_title() throws NotFoundException{
            String expected = m1.getTitle();
-           String result = movieFacade.getMovieByTitle(expected).getTitle();
+           String result = movieFacade.getMovieByTitle(expected).get(0).getTitle();
            assertEquals(expected, result);
        }
          @Test
    public void testCreateMovie_with_invalid_input(){
-          MovieDTO m3 = new MovieDTO(null, 2022, "They are driving around, that's pretty much it",null,"Scifi, horror","Arnold and the gang");
+          MovieDTO m3 = new MovieDTO(null, 2022, "They are driving around, that's pretty much it",null,"Scifi, horror","Arnold and the gang",null);
           assertThrows(Exception.class, () -> {
               movieFacade.createMovie(m3);
           });
@@ -93,10 +97,28 @@ public class MovieFacadeTest {
    @Test
    public void testCreateMovie_with_valid_input() throws NotFoundException{
        int expected = movieFacade.getAllMovies().size()+1;
-       MovieDTO m3 = new MovieDTO("Frisk og frejdig", 2022, "They are driving around, that's pretty much it","hep-hey","Scifi, horror","Arnold and the gang");
+       MovieDTO m3 = new MovieDTO("Frisk og frejdig", 2022, "They are driving around, that's pretty much it","hep-hey","Scifi, horror","Arnold and the gang","posterland.dk");
        movieFacade.createMovie(m3);
        int result = movieFacade.getAllMovies().size();
        assertEquals(expected, result);
+   }
+   
+   @Test
+   public void testcheckIfMovieExistsInDbAndCreateRequest() throws NotFoundException{
+        MovieDTO m3 = new MovieDTO("Frisk og frejdig", 2022, "They are driving around, that's pretty much it","hep-hey","Scifi, horror","Arnold and the gang","posterland.dk");
+        MoviePosterDTO poster = new MoviePosterDTO("eyo","www.posterland.dk");
+        CombinedMovieInfoDTO combinedInfo = new CombinedMovieInfoDTO(m3,poster);
+        movieFacade.checkIfMovieExistsInDbAndCreateRequest(combinedInfo);
+        int expected = 3;
+        int result = movieFacade.getAllMovies().size();
+        int expectedd = 1;
+        
+        int resultt = requestFacade.getRequestAmountByMovieTitle("Frisk og frejdig");
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println(resultt);
+        assertEquals(expected, result);
+        assertEquals(expectedd, resultt);
+        
    }
 
 
