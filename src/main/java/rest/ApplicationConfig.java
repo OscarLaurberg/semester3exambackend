@@ -40,6 +40,7 @@ public class ApplicationConfig extends Application {
         resources.add(errorhandling.UserExceptionMapper.class);
         resources.add(org.glassfish.jersey.server.wadl.internal.WadlResource.class);
         resources.add(rest.LoginEndpoint.class);
+        resources.add(rest.MovieCountResource.class);
         resources.add(rest.MovieInfoAllRatingsResource.class);
         resources.add(rest.MovieInfoIMDBResource.class);
         resources.add(rest.MovieInfoResource.class);

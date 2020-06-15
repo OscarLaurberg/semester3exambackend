@@ -16,14 +16,11 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.hamcrest.Matchers;
 import static org.hamcrest.Matchers.equalTo;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 import utils.EMF_Creator;
 
 /**
@@ -75,6 +72,7 @@ public class MovieInfoAllRatingsResourceTest {
                 .statusCode(200);
     }
     
+    @Disabled
     @Test
     public void testGetAllRatingsFromMovieTile() {
          String title = "Die%20hard";

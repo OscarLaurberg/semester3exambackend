@@ -79,8 +79,8 @@ public class MovieInfoResource {
     @Context
     private UriInfo context;
 
-    @Operation(summary = "Getting two random jokes, one Chuck Norris and one Dad Joke",
-            tags = {"jokes"},
+    @Operation(summary = "Getting details about the requested movie",
+            tags = {"movie"},
             responses = {
                 @ApiResponse(
                         content = @Content(mediaType = "application/json", schema = @Schema(implementation = dtos.CombinedMovieInfoDTO.class))),

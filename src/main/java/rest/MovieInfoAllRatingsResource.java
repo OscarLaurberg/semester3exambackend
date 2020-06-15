@@ -17,13 +17,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.io.IOException;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import utils.HttpUtils;
@@ -53,10 +52,10 @@ public class MovieInfoAllRatingsResource {
                 @ApiResponse(responseCode = "200", description = "The requested movie info"),
                 @ApiResponse(responseCode = "404", description = "Movie not found")})
     @GET
-    //@RolesAllowed("user,admin")
+    @RolesAllowed({"admin","user"})
     @Path("/{title}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getAllRatingsMovieInfoFromTitle(@PathParam("title") String title) throws IOException, NotFoundException {
+    public String getAllRatingsMovieInfoFromTitle(@PathParam("title") String title) throws IOException {
         String movieInfoJson = HttpUtils.fetchData(MOVIE_INFO_URL + title);
         String moviePosterJson = HttpUtils.fetchData(MOVIE_POSTER_URL + title);
         String allRatings = HttpUtils.fetchData(MOVIE_IMDB_RATING_URL + title + "/imt");
