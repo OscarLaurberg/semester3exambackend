@@ -5,13 +5,10 @@
  */
 package rest;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import utils.JsonUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import dtos.CombinedMovieInfoDTO;
-import utils.JsonUtils;
-
 import dtos.MovieInfoDTO;
 import dtos.MoviePosterDTO;
 import errorhandling.NotFoundException;
@@ -20,7 +17,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.io.IOException;
-import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -37,8 +33,8 @@ import utils.HttpUtils;
  *
  * @author oscar
  */
-@Path("movie-info-imdb")
-public class MovieInfoIMDBResource {
+@Path("movie-info-all-ratings")
+public class MovieInfoAllRatingsResource {
 
     @Context
     private UriInfo context;
@@ -60,15 +56,17 @@ public class MovieInfoIMDBResource {
     //@RolesAllowed("user,admin")
     @Path("/{title}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getMovieInfoFromTitle(@PathParam("title") String title) throws IOException, NotFoundException {
+    public String getAllRatingsMovieInfoFromTitle(@PathParam("title") String title) throws IOException, NotFoundException {
         String movieInfoJson = HttpUtils.fetchData(MOVIE_INFO_URL + title);
         String moviePosterJson = HttpUtils.fetchData(MOVIE_POSTER_URL + title);
-        String imdbRatings = HttpUtils.fetchData(MOVIE_IMDB_RATING_URL + title + "/i");
-        JsonObject jsonObject = GSON.fromJson(imdbRatings, JsonObject.class);
+        String allRatings = HttpUtils.fetchData(MOVIE_IMDB_RATING_URL + title + "/imt");
+        JsonObject jsonObject = GSON.fromJson(allRatings,JsonObject.class);
         String imdbRating = jsonUtils.getNestedJsonObject(jsonObject, "imdb");
-                MovieInfoDTO movieInfo = GSON.fromJson(movieInfoJson, MovieInfoDTO.class);
+        String tomatoRating = jsonUtils.getNestedJsonObject(jsonObject, "tomatoes");
+        String metaRating = jsonUtils.getNestedJsonObject(jsonObject,"metacritics");
+        MovieInfoDTO movieInfo = GSON.fromJson(movieInfoJson, MovieInfoDTO.class);
         MoviePosterDTO posterInfo = GSON.fromJson(moviePosterJson, MoviePosterDTO.class);
-        CombinedMovieInfoDTO combinedInfo = new CombinedMovieInfoDTO(movieInfo, posterInfo, imdbRating);
+        CombinedMovieInfoDTO combinedInfo = new CombinedMovieInfoDTO(movieInfo, posterInfo, imdbRating, tomatoRating, metaRating);
         String combinedJson = GSON.toJson(combinedInfo);
         return combinedJson;
     }
