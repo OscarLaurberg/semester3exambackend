@@ -53,15 +53,13 @@ public class MovieFacade {
         
     }
     
-    public MovieDTO createMovie(MovieDTO movieDTO) throws NotFoundException {
+    public MovieDTO createMovie(MovieDTO movieDTO) {
         EntityManager entityManager = getEntityManager();
         Movie movie = new Movie(movieDTO);
         try {
             entityManager.getTransaction().begin();
             entityManager.persist(movie);
             entityManager.getTransaction().commit();
-        }catch(Exception e){
-            throw new NotFoundException();
         }finally{
             entityManager.close();
         }

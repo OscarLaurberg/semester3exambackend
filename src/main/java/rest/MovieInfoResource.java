@@ -6,9 +6,11 @@
 package rest;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import dtos.CombinedMovieInfoDTO;
 import dtos.MovieDTO;
 import dtos.MoviePosterDTO;
+import facades.MovieFacade;
 import errorhandling.NotFoundException;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,6 +22,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.io.IOException;
+import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -29,6 +32,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
+import utils.EMF_Creator;
 import utils.HttpUtils;
 
 /**
@@ -63,6 +67,15 @@ public class MovieInfoResource {
     private final String MOVIE_INFO_URL = "https://ex2-0-2-0.mydemos.dk/movieInfo/";
     private final String MOVIE_POSTER_URL = "https://ex2-0-2-0.mydemos.dk/moviePoster/";
     private final Gson GSON = new Gson();
+    
+        private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(
+            "pu",
+            "jdbc:mysql://localhost:3307/startcode",
+            "dev",
+            "ax2",
+            EMF_Creator.Strategy.CREATE);
+    private static final MovieFacade FACADE = MovieFacade.getMovieFacade(EMF);
+    
     @Context
     private UriInfo context;
 
@@ -79,9 +92,13 @@ public class MovieInfoResource {
     public String getMovieInfoFromTitle(@PathParam("title") String title) throws IOException, NotFoundException {
         String movieInfoJson = HttpUtils.fetchData(MOVIE_INFO_URL + title);
         String moviePosterJson = HttpUtils.fetchData(MOVIE_POSTER_URL + title);
-        MovieDTO movieInfo = GSON.fromJson(movieInfoJson, MovieDTO.class);
+        MovieDTO movieDTO = GSON.fromJson(movieInfoJson, MovieDTO.class);
+        //MovieDTO movie = FACADE.getMovieByTitle(movieDTO.getTitle());
+        //if(movie == null){
+        //    FACADE.createMovie(movieDTO);
+      //  }
         MoviePosterDTO posterInfo = GSON.fromJson(moviePosterJson, MoviePosterDTO.class);
-        CombinedMovieInfoDTO combinedInfo = new CombinedMovieInfoDTO(movieInfo, posterInfo);
+        CombinedMovieInfoDTO combinedInfo = new CombinedMovieInfoDTO(movieDTO, posterInfo);
         String combinedJson = GSON.toJson(combinedInfo);
         return combinedJson;
       

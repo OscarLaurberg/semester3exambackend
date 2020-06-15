@@ -54,7 +54,7 @@ public class Movie implements Serializable {
     private String poster;
     
 
-    @OneToMany(mappedBy="owner", cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToMany(mappedBy="owner", cascade = {CascadeType.PERSIST,CascadeType.ALL})
     private List<Request> requests = new ArrayList<>();
     
        public Movie(String title, int year, String plot, String directors, String genres, String cast) {

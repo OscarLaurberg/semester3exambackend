@@ -5,6 +5,7 @@
  */
 package entity;
 
+import dtos.RequestDTO;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -24,7 +25,7 @@ import javax.persistence.TemporalType;
 @Table(name = "Request")
 @NamedQueries({
     @NamedQuery(name = "Request.deleteAllRows", query = "DELETE FROM Request"),
-    @NamedQuery(name = "Request.getAll", query = "SELECT r FROM Request r"),
+    @NamedQuery(name = "Request.getAll", query = "SELECT r FROM Request r ORDER by r.title"),
     @NamedQuery(name = "Request.getByTitle", query = "SELECT r FROM Request r WHERE r.title LIKE :title")
 })
 public class Request implements Serializable {
@@ -47,10 +48,15 @@ public class Request implements Serializable {
 
     }
 
-    public Request(String title, int year, String genres) {
+    public Request(String title) {
         this.title = title;
         requestDate = new Date();
 
+    }
+    
+    public Request (RequestDTO requestDTO){
+        this.title=requestDTO.getTitle();
+        
     }
 
     public Long getId() {
@@ -86,4 +92,6 @@ public class Request implements Serializable {
         this.owner = movie;
     }
 
+    
+    
 }
