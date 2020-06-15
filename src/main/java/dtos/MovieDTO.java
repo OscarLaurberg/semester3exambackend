@@ -5,6 +5,8 @@
  */
 package dtos;
 
+import entity.Movie;
+
 /**
  *
  * @author oscar
@@ -25,6 +27,15 @@ public class MovieDTO {
         this.directors = directors;
         this.genres = genres;
         this.cast = cast;
+    }
+    
+    public MovieDTO (Movie movie){
+        this.title = movie.getTitle();
+        this.year = movie.getYear_();
+        this.plot = movie.getPlot();
+        this.directors = movie.getDirectors();
+        this.genres = movie.getGenres();
+        this.cast = movie.getCast_();
     }
    
    public MovieDTO(){
