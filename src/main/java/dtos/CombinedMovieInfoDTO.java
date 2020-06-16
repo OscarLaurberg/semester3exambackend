@@ -42,7 +42,8 @@ public class CombinedMovieInfoDTO {
         this.cast = movieInfo.getCast();
         this.poster = moviePoster.getPoster();
         this.imdbRating = imdbRating;
-    }
+        }
+        //Burde have undersøgt om alle disse constructorer virkelig er nødvendige, men tiden var der ikke.
         
         public CombinedMovieInfoDTO(MovieDTO movieInfo, MoviePosterDTO moviePoster, String imdbRating, String tomatoRating, String metaRating){
         this.title=movieInfo.getTitle();

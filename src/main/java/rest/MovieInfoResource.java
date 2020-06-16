@@ -6,7 +6,6 @@
 package rest;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import dtos.CombinedMovieInfoDTO;
 import dtos.MovieDTO;
 import dtos.MoviePosterDTO;
@@ -128,18 +127,3 @@ public class MovieInfoResource {
     public void putJson(String content) {
     }
 }
-
-    
-
-/*
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getJokes() throws IOException {
-        String chuck = HttpUtils.fetchData("https://api.chucknorris.io/jokes/random");
-        String dad = HttpUtils.fetchData("https://icanhazdadjoke.com/");
-        ChuckJokeDTO chuckJoke = GSON.fromJson(chuck, ChuckJokeDTO.class);
-        DadJokeDTO dadJoke = GSON.fromJson(dad, DadJokeDTO.class);
-        CombinedJokesDTO combined = new CombinedJokesDTO(chuckJoke,dadJoke);
-        String combinedJson = GSON.toJson(combined);
-        return combinedJson;
-    }*/
